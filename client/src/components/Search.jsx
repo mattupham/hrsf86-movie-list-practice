@@ -2,10 +2,21 @@ import React from 'react';
 
 let Search = (props) => {
   return (
-    <div className="searchListItemContainer">
-        <input className="searchMovieInput" placeholder="Search..."></input>
-        <button className="searchButton" type="button">Go!</button>
-    </div>
+    <form 
+      className="searchMovieListItemContainer"
+      onSubmit={props.handleSearchMovieSubmit}
+    >
+      <input 
+        className="searchMovieInput" 
+        placeholder="Search..."
+        onChange={props.handleSearchMovieInputChange}
+      ></input>
+      <input 
+        className="searchButton" 
+        type="submit"
+        value="Go!"
+      ></input>
+    </form>
   )
 }
 
