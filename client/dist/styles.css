@@ -37,3 +37,7 @@
   width: 50px;
   background-color: gray;
 }
+
+.watchedButton {
+  background-color: orange;
+}

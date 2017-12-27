@@ -4,6 +4,7 @@ import MovieListContainer from './components/MovieListContainer.jsx'
 import Movie from './components/Movie.jsx'
 import Search from './components/Search.jsx'
 import AddMovie from './components/AddMovie.jsx'
+import Data from '../../database/index.js'
 
 class MovieList extends React.Component {
   constructor(props) {
@@ -13,23 +14,34 @@ class MovieList extends React.Component {
     this.handleAddMovieSubmit = this.handleAddMovieSubmit.bind(this);
     this.handleSearchMovieInputChange = this.handleSearchMovieInputChange.bind(this);
     this.handleSearchMovieSubmit = this.handleSearchMovieSubmit.bind(this);
+    this.handleWatchedButtonClick = this.handleWatchedButtonClick.bind(this);
     this.state = {
-      movieList: [{title: 'Mean Girls'},{title: 'Hackers'},{title: 'The Grey'},{title: 'Sunshine'},{title: 'Ex Machina'}],
+      movieList: Data.movieList,
+      unwatchedMovieList: Data.movieList,
+      watchedMovieList: [],
       addMovieValue: '',
       searchMovieValue: ''
     }
   }
   
+  handleWatchedButtonClick(event){
+    //toggle unwatched to watch, vice verse
+    //if item isn't in watched movie list, add it
+    //if item is in watched movie list, remove it
+  }
+  
   handleSearchMovieInputChange(event){
     this.setState({searchMovieValue: event.target.value});
-    console.log(event.target.value);
+    //console.log(event.target.value);
   }
   
   handleSearchMovieSubmit(event){
     event.preventDefault();
     //if value isn't empty, adds a movie to the list
     if (this.state.searchMovieValue !== '') {
-      alert('Movie searched');
+      //filter movies array by search value, if movie found update movie list
+      let filteredMovies = this.state.movieList.filter((movie) => movie['title'].toLowerCase() === this.state.searchMovieValue.toLowerCase());
+      filteredMovies.length !== 0 ? this.setState({movieList: filteredMovies}) : alert('Movie Not Found');  
     } else {
       alert('Please enter a movie');
     }
@@ -67,6 +79,7 @@ class MovieList extends React.Component {
         />
         <MovieListContainer 
           movieList={this.state.movieList}
+          handleWatchedButtonClick={this.handleWatchedButtonClick}
         />
       </div>
     )
