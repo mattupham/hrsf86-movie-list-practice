@@ -1,9 +1,9 @@
 module.exports = {
   movieList: [
-    {title: 'Mean Girls'},
-    {title: 'Hackers'},
-    {title: 'The Grey'},
-    {title: 'Sunshine'},
-    {title: 'Ex Machina'}
+    {title: 'Mean Girls', status: 'unwatched'},
+    {title: 'Hackers', status: 'unwatched'},
+    {title: 'The Grey', status: 'unwatched'},
+    {title: 'Sunshine', status: 'unwatched'},
+    {title: 'Ex Machina', status: 'unwatched'}
   ]
 };

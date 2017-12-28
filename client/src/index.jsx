@@ -17,17 +17,16 @@ class MovieList extends React.Component {
     this.handleWatchedButtonClick = this.handleWatchedButtonClick.bind(this);
     this.state = {
       movieList: Data.movieList,
-      unwatchedMovieList: Data.movieList,
-      watchedMovieList: [],
       addMovieValue: '',
       searchMovieValue: ''
     }
   }
   
   handleWatchedButtonClick(event){
-    //toggle unwatched to watch, vice verse
-    //if item isn't in watched movie list, add it
-    //if item is in watched movie list, remove it
+    console.log();
+    // if (event.target.value === 'unwatched') {
+    //   this.state.
+    // }
   }
   
   handleSearchMovieInputChange(event){
