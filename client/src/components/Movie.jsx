@@ -19,14 +19,6 @@ class Movie extends React.Component {
     return (
       <div className="movieListItem">
         <div>{this.props.movie.title}</div>
-        <input
-          className="watchedButton"
-          type="button"
-          value={this.state.status}
-          //onClick={props.handleWatchedButtonClick}
-          onClick={this.handleWatchedButtonClick}
-        >
-        </input>
       </div>
       );
   }

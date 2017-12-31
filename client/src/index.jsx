@@ -17,51 +17,78 @@ class MovieList extends React.Component {
     this.handleWatchedButtonClick = this.handleWatchedButtonClick.bind(this);
     this.state = {
       movieList: Data.movieList,
+      movieListView: Data.movieList,
       addMovieValue: '',
       searchMovieValue: ''
     }
   }
-  
+
   handleWatchedButtonClick(event){
-    console.log();
-    // if (event.target.value === 'unwatched') {
-    //   this.state.
-    // }
   }
   
   handleSearchMovieInputChange(event){
     this.setState({searchMovieValue: event.target.value});
-    //console.log(event.target.value);
   }
   
   handleSearchMovieSubmit(event){
     event.preventDefault();
-    //if value isn't empty, adds a movie to the list
     if (this.state.searchMovieValue !== '') {
-      //filter movies array by search value, if movie found update movie list
-      let filteredMovies = this.state.movieList.filter((movie) => movie['title'].toLowerCase() === this.state.searchMovieValue.toLowerCase());
-      filteredMovies.length !== 0 ? this.setState({movieList: filteredMovies}) : alert('Movie Not Found');  
+      //filters the movies if search isn't empty
+      let filteredMovieListView = this.filterMovieListViewBySearch(this.state.searchMovieValue);
+      //if movie is not found, alert to user, else update the state
+      filteredMovieListView.length === 0 ? alert('movie not found') : this.setState({movieListView: filteredMovieListView});
     } else {
-      alert('Please enter a movie');
+      alert('Please add a movie');
     }
+    //reset state
     this.setState({searchMovieValue: ''});
   }
   
   handleAddMovieInputChange(event){
     this.setState({addMovieValue: event.target.value});
   }
-  
+
+  filterMovieListViewBySearch(searchQuery){
+    //filters view by title if search query is included in title (case insensitive)
+    return this.state.movieListView.filter(function(movie){
+      return movie.title.toLowerCase().includes(searchQuery.toLowerCase());
+    })
+  }
+
+  filterMovieListViewByAdd(searchQuery){
+    //filters view by title if search query is exactly equal to title (case insensitive)
+    return this.state.movieListView.filter(function(movie){
+      return movie.title.toLowerCase() === searchQuery.toLowerCase();
+    })
+  }
+
+  createMovieObject(movieTitleString){
+    let movieObject = {};
+    movieObject.title = movieTitleString;
+    movieObject.status = 'unwatched';
+    return movieObject;
+  }
+
   handleAddMovieSubmit(event){
     event.preventDefault();
-    //if value isn't empty, adds a movie to the list
     if (this.state.addMovieValue !== '') {
-      let movies = this.state.movieList.map((movie) => movie.title.toLowerCase());
-      //if movies list doesn't include movie, add to list, else alert (case insensitive)
-      !movies.includes(this.state.addMovieValue.toLowerCase()) ? this.state.movieList.push({title: this.state.addMovieValue}) : alert('Movie is already in list');
+      let filteredMovieListView = this.filterMovieListViewByAdd(this.state.addMovieValue);
+      //check to see if value already exists
+      if (filteredMovieListView.length === 0){
+        //add movie to database (TO DO)
+        //add to movie list view
+        let currentMovieList = this.state.movieList;
+        currentMovieList.push(this.createMovieObject(this.state.addMovieValue));
+        this.setState({movieList: currentMovieList});
+        this.setState({movieListView: currentMovieList});
+      } else {
+        alert('movie already in list');
+      }
     } else {
-      alert('Please add a movie');
+      alert('please enter a movie');
     }
     this.setState({addMovieValue: ''});
+    
   }
 
   render() {
@@ -77,7 +104,7 @@ class MovieList extends React.Component {
           handleSearchMovieInputChange={this.handleSearchMovieInputChange}
         />
         <MovieListContainer 
-          movieList={this.state.movieList}
+          movieList={this.state.movieListView}
           handleWatchedButtonClick={this.handleWatchedButtonClick}
         />
       </div>
